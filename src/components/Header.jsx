@@ -1,40 +1,38 @@
-import React from 'react'; // Added
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase/config';
-import { signOut } from 'firebase/auth';
-import Search from './Search';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
-function Header() {
-  const handleLogout = async () => {
+function Header({ user }) {
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
     try {
-      await signOut(auth);
+      await signInWithEmailAndPassword(auth, prompt('Email:'), prompt('Password:'));
+      navigate('/');
     } catch (error) {
-      console.error("Error signing out: ", error);
+      alert('Login failed: ' + error.message);
     }
+  };
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate('/');
   };
 
   return (
     <header className="header">
-      <div className="header-container">
-        <Link to="/" className="logo">
-          <h1>Kashurpedia</h1>
-        </Link>
-        <Search />
-        <nav>
-          {auth.currentUser ? (
-            <>
-              <Link to="/create">Create</Link>
-              <Link to={`/user/${auth.currentUser.uid}`}>My Profile</Link>
-              <button onClick={handleLogout}>Logout</button>
-            </>
-          ) : (
-            <>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-            </>
-          )}
-        </nav>
-      </div>
+      <Link to="/">Kashurpedia</Link>
+      <nav>
+        <Link to="/create">Create Article</Link>
+        {user ? (
+          <>
+            <span>Welcome, {user.email}</span>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <button onClick={handleLogin}>Login</button>
+        )}
+      </nav>
     </header>
   );
 }
