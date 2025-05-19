@@ -7,25 +7,45 @@
     <meta name="keywords" content="encyclopedia, knowledge base, community, articles, wiki, Kashurpedia" />
     <meta name="author" content="Kashurpedia Community" />
     <meta name="robots" content="index, follow" />
-    
+
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta property="og:title" content="Kashurpedia - Community Knowledge Base" />
     <meta property="og:description" content="Explore and contribute to Kashurpedia, a platform for sharing knowledge and collaborating on articles." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://kashurpedia.com" />
+    <meta property="og:url" content="https://kashurpedia-rouge.vercel.app" />
     <meta property="og:image" content="%PUBLIC_URL%/assets/og-image.jpg" />
-    
+
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Kashurpedia - Community Knowledge Base" />
     <meta name="twitter:description" content="Explore and contribute to Kashurpedia, a platform for sharing knowledge and collaborating on articles." />
     <meta name="twitter:image" content="%PUBLIC_URL%/assets/og-image.jpg" />
-    
-    <title>Kashurpedia - Community Knowledge Base</title>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon.ico" />
+
+    <!-- Global Styles -->
     <link rel="stylesheet" href="%PUBLIC_URL%/assets/styles.css" />
+
+    <!-- Preload critical assets to improve performance -->
+    <link rel="preload" href="%PUBLIC_URL%/static/js/main.js" as="script" />
+
+    <title>Kashurpedia - Community Knowledge Base</title>
   </head>
   <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- Fallback for JavaScript errors -->
+    <script>
+      window.addEventListener('error', function(event) {
+        console.error('An error occurred:', event.error);
+        document.getElementById('root').innerHTML = `
+          <div style="text-align: center; padding: 20px; color: red;">
+            <h1>Error Loading Kashurpedia</h1>
+            <p>An unexpected error occurred. Please try refreshing the page or contact support.</p>
+          </div>
+        `;
+      });
+    </script>
   </body>
 </html>
