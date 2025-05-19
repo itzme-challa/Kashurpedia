@@ -11,25 +11,32 @@
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
+      "src": "/static/js/(.*)",
+      "dest": "/static/js/$1",
       "headers": {
         "cache-control": "public, max-age=31536000, immutable"
-      },
-      "dest": "/static/$1"
+      }
+    },
+    {
+      "src": "/static/css/(.*)",
+      "dest": "/static/css/$1",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
     },
     {
       "src": "/assets/(.*)",
+      "dest": "/assets/$1",
       "headers": {
         "cache-control": "public, max-age=31536000, immutable"
-      },
-      "dest": "/assets/$1"
+      }
     },
     {
       "src": "/(.*)",
+      "dest": "/index.html",
       "headers": {
         "cache-control": "public, max-age=0, must-revalidate"
-      },
-      "dest": "/index.html"
+      }
     }
   ]
 }
