@@ -1,6 +1,7 @@
+import React from 'react'; // Added
 import { useState } from 'react';
 import { ref, get } from 'firebase/database';
-import { database, auth } from '../firebase/config'; // Added auth import
+import { database, auth } from '../firebase/config';
 
 function ArticleEditor({ initialTitle = '', initialContent = '', onSave }) {
   const [title, setTitle] = useState(initialTitle);
