@@ -1,92 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Kashurpedia - The Free Encyclopedia" />
-  <meta name="keywords" content="encyclopedia, wiki, kashurpedia, knowledge" />
-  <meta name="author" content="Your Name" />
-  
-  <!-- iOS meta tags -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta name="apple-mobile-web-app-title" content="Kashurpedia" />
-  
-  <!-- Android meta tags -->
-  <meta name="mobile-web-app-capable" content="yes" />
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://kashurpedia.vercel.app/" />
-  <meta property="og:title" content="Kashurpedia" />
-  <meta property="og:description" content="The Free Encyclopedia" />
-  <meta property="og:image" content="%PUBLIC_URL%/logo192.png" />
-
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://kashurpedia.vercel.app/" />
-  <meta property="twitter:title" content="Kashurpedia" />
-  <meta property="twitter:description" content="The Free Encyclopedia" />
-  <meta property="twitter:image" content="%PUBLIC_URL%/logo192.png" />
-
-  <!-- Manifest -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  
-  <!-- Title -->
-  <title>Kashurpedia - The Free Encyclopedia</title>
-  
-  <!-- Preconnect to Firebase -->
-  <link rel="preconnect" href="https://kashurpedia.firebaseapp.com" />
-  <link rel="preconnect" href="https://kashurpedia.firebasestorage.app" />
-  <link rel="preconnect" href="https://kashurpedia-default-rtdb.firebaseio.com" />
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet" />
-  
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-  
-  <!-- Theme color for address bar -->
-  <meta name="theme-color" content="#ffffff" />
-  
-  <!-- iOS splash screen -->
-  <link rel="apple-touch-startup-image" href="%PUBLIC_URL%/splash.png" />
-  
-  <!-- Windows tile -->
-  <meta name="msapplication-TileColor" content="#ffffff" />
-  <meta name="msapplication-TileImage" content="%PUBLIC_URL%/mstile-144x144.png" />
-  
-  <!-- Safari pinned tab icon -->
-  <link rel="mask-icon" href="%PUBLIC_URL%/safari-pinned-tab.svg" color="#5bbad5" />
-</head>
-<body>
-  <noscript>
-    <div style="text-align: center; margin-top: 50px;">
-      <h1>JavaScript is required to run Kashurpedia</h1>
-      <p>Please enable JavaScript in your browser settings to continue.</p>
-      <p>Kashurpedia is a modern web application that requires JavaScript to function properly.</p>
-    </div>
-  </noscript>
-  <div id="root"></div>
-  
-  <!-- Load service worker for PWA -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(registration => {
-            console.log('ServiceWorker registration successful');
-          })
-          .catch(err => {
-            console.log('ServiceWorker registration failed: ', err);
-          });
-      });
-    }
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Kashurpedia - A community-driven encyclopedia for knowledge sharing and collaboration." />
+    <meta name="keywords" content="encyclopedia, knowledge base, community, articles, wiki, Kashurpedia" />
+    <meta name="author" content="Kashurpedia Community" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="Kashurpedia - Community Knowledge Base" />
+    <meta property="og:description" content="Explore and contribute to Kashurpedia, a platform for sharing knowledge and collaborating on articles." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kashurpedia.com" />
+    <meta property="og:image" content="%PUBLIC_URL%/assets/og-image.jpg" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kashurpedia - Community Knowledge Base" />
+    <meta name="twitter:description" content="Explore and contribute to Kashurpedia, a platform for sharing knowledge and collaborating on articles." />
+    <meta name="twitter:image" content="%PUBLIC_URL%/assets/og-image.jpg" />
+    
+    <title>Kashurpedia - Community Knowledge Base</title>
+    <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/assets/styles.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
