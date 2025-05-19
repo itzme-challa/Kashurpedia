@@ -1,4 +1,4 @@
-// UserPage.jsx
+import React from 'react'; // Added
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ref, get } from 'firebase/database';
@@ -14,7 +14,6 @@ function UserPage() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Fetch user's articles
         const articlesRef = ref(database, 'articles');
         const snapshot = await get(articlesRef);
         
@@ -23,7 +22,6 @@ function UserPage() {
           const userArticles = articles.filter(article => article.author.id === userId);
           setUserArticles(userArticles);
           
-          // Get user info from first article (if exists)
           if (userArticles.length > 0) {
             setUserInfo({
               name: userArticles[0].author.name,
