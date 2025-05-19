@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Kashurpedia - A community-driven encyclopedia for knowledge sharing and collaboration." />
-    <title>Kashurpedia - Community Knowledge Base</title>
+    <meta name="description" content="Kashurpedia - A community-driven encyclopedia for village articles." />
+    <title>Kashurpedia</title>
     <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="stylesheet" href="%PUBLIC_URL%/assets/styles.css" />
   </head>
@@ -14,26 +14,17 @@
     <script>
       console.log('index.html: Loaded');
       window.onerror = function(message, source, lineno, colno, error) {
-        console.error('Uncaught error:', {
-          message: message,
-          source: source,
-          line: lineno,
-          column: colno,
-          error: error ? error.stack : 'No stack trace'
-        });
+        console.error('Uncaught error:', { message, source, lineno, colno, error });
         document.getElementById('root').innerHTML = `
           <div style="text-align: center; padding: 20px; color: red;">
             <h1>Error Loading Kashurpedia</h1>
             <p>Uncaught error: ${message}</p>
             <p>Source: ${source}</p>
-            <p>Line: ${lineno}, Column: ${colno}</p>
-            <p>Stack: ${error ? error.stack : 'No stack trace'}</p>
             <p>Please refresh the page or contact support.</p>
           </div>
         `;
         return true;
       };
-      console.log('index.html: Requesting static/js/main.e63efb7f.js');
     </script>
   </body>
 </html>
