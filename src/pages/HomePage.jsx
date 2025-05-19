@@ -1,67 +1,51 @@
-import React from 'react'; // Added
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ref, get } from 'firebase/database';
 import { database } from '../firebase/config';
 import { Link } from 'react-router-dom';
 
 function HomePage() {
-  const [featuredArticles, setFeaturedArticles] = useState([]);
-  const [recentArticles, setRecentArticles] = useState([]);
+  const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
+        console.log('HomePage: Fetching articles');
         const articlesRef = ref(database, 'articles');
         const snapshot = await get(articlesRef);
-        
         if (snapshot.exists()) {
-          const articles = Object.values(snapshot.val());
-          const sorted = articles.sort((a, b) => 
-            new Date(b.lastEdited) - new Date(a.lastEdited));
-          setFeaturedArticles(sorted.slice(0, 3));
-          setRecentArticles(sorted.slice(0, 10));
+          setArticles(Object.entries(snapshot.val()).map(([title, data]) => ({
+            title,
+            ...data
+          })));
         }
+        console.log('HomePage: Articles fetched');
       } catch (err) {
-        console.error('Failed to load articles: ', err);
+        console.error('HomePage: Fetch error', err);
+        setError('Failed to load articles');
       } finally {
         setLoading(false);
       }
     };
-
     fetchArticles();
   }, []);
 
   if (loading) return <div>Loading...</div>;
+  if (error) return <div className="error">{error}</div>;
 
   return (
-    <div className="home-page">
-      <section className="featured">
-        <h2>Featured Articles</h2>
-        <div className="article-grid">
-          {featuredArticles.map((article) => (
-            <div key={article.title} className="featured-card">
-              <Link to={`/article/${encodeURIComponent(article.title)}`}>
-                <h3>{article.title}</h3>
-                <p>{article.content.substring(0, 150)}...</p>
-              </Link>
-            </div>
-          ))}
-        </div>
-      </section>
-      <section className="recent">
-        <h2>Recently Edited</h2>
-        <ul>
-          {recentArticles.map((article) => (
-            <li key={article.title}>
-              <Link to={`/article/${encodeURIComponent(article.title)}`}>
-                {article.title}
-              </Link>
-              <span> - Edited {new Date(article.lastEdited).toLocaleDateString()}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+    <div className="article-list">
+      <h1>Village Articles</h1>
+      <ul>
+        {articles.map((article) => (
+          <li key={article.title}>
+            <Link to={`/article/${encodeURIComponent(article.title)}`}>
+              {article.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
