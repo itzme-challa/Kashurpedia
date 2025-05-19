@@ -1,7 +1,8 @@
+import React from 'react'; // Added
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ref, get, set } from 'firebase/database';
-import { database } from '../firebase/config'; // Removed unused auth
+import { database } from '../firebase/config';
 import ArticleEditor from '../components/ArticleEditor';
 
 function EditPage() {
