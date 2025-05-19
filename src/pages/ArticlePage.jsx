@@ -1,9 +1,9 @@
-// ArticlePage.jsx
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ref, get } from 'firebase/database';
 import { database } from '../firebase/config';
 import Article from '../components/Article';
+import { Helmet } from 'react-helmet-async'; // Add react-helmet-async for SEO
 
 function ArticlePage() {
   const { title } = useParams();
@@ -16,7 +16,7 @@ function ArticlePage() {
       try {
         const articleRef = ref(database, `articles/${encodeURIComponent(title)}`);
         const snapshot = await get(articleRef);
-        
+
         if (snapshot.exists()) {
           setArticle(snapshot.val());
         } else {
@@ -36,7 +36,20 @@ function ArticlePage() {
   if (error) return <div className="error">{error}</div>;
   if (!article) return <div>Article not found</div>;
 
-  return <Article {...article} />;
+  return (
+    <>
+      <Helmet>
+        <title>{article.title} - Kashurpedia</title>
+        <meta name="description" content={article.content.substring(0, 160)} />
+        <meta name="keywords" content={`${article.title}, Kashurpedia, wiki, knowledge`} />
+        <meta property="og:title" content={`${article.title} - Kashurpedia`} />
+        <meta property="og:description" content={article.content.substring(0, 160)} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://kashurpedia.com/article/${encodeURIComponent(title)}`} />
+      </Helmet>
+      <Article {...article} />
+    </>
+  );
 }
 
 export default ArticlePage;
