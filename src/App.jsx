@@ -1,4 +1,3 @@
-import React from 'react'; // Added
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
@@ -10,13 +9,26 @@ import UserPage from './pages/UserPage';
 import './App.css';
 
 class ErrorBoundary extends React.Component {
-  state = { error: null };
+  state = { error: null, errorInfo: null };
+
   static getDerivedStateFromError(error) {
     return { error };
   }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    this.setState({ error, errorInfo });
+  }
+
   render() {
     if (this.state.error) {
-      return <div className="error">Something went wrong: {this.state.error.message}</div>;
+      return (
+        <div className="error" style={{ textAlign: 'center', padding: '20px', color: 'red' }}>
+          <h1>Something went wrong</h1>
+          <p>{this.state.error.message}</p>
+          <pre>{this.state.errorInfo?.componentStack}</pre>
+        </div>
+      );
     }
     return this.props.children;
   }
