@@ -1,62 +1,96 @@
-import React from 'react'; // Added
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ref, get, set } from 'firebase/database';
-import { database } from '../firebase/config';
-import ArticleEditor from '../components/ArticleEditor';
+import { database, auth } from '../firebase/config';
 
-function EditPage() {
+function EditorPage({ user, mode }) {
   const { title } = useParams();
   const navigate = useNavigate();
-  const [initialArticle, setInitialArticle] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [formTitle, setFormTitle] = useState(mode === 'edit' ? decodeURIComponent(title) : '');
+  const [content, setContent] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(mode === 'edit');
 
   useEffect(() => {
-    const fetchArticle = async () => {
-      try {
-        const articleRef = ref(database, `articles/${encodeURIComponent(title)}`);
-        const snapshot = await get(articleRef);
-        
-        if (snapshot.exists()) {
-          setInitialArticle(snapshot.val());
-        } else {
-          setError('Article not found');
+    if (mode === 'edit' && title) {
+      const fetchArticle = async () => {
+        try {
+          console.log('EditorPage: Fetching article', title);
+          const articleRef = ref(database, `articles/${encodeURIComponent(title)}`);
+          const snapshot = await get(articleRef);
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            setFormTitle(data.title);
+            setContent(data.content);
+          } else {
+            setError('Article not found');
+          }
+        } catch (err) {
+          console.error('EditorPage: Fetch error', err);
+          setError('Failed to load article');
+        } finally {
+          setLoading(false);
         }
-      } catch (err) {
-        setError('Failed to load article: ' + err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
+      fetchArticle();
+    }
+  }, [title, mode]);
 
-    fetchArticle();
-  }, [title]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!user) {
+      setError('You must be logged in');
+      return;
+    }
+    if (!formTitle.trim() || !content.trim()) {
+      setError('Title and content are required');
+      return;
+    }
 
-  const handleSave = async (articleData) => {
     try {
-      const articleRef = ref(database, `articles/${encodeURIComponent(articleData.title)}`);
-      await set(articleRef, articleData);
-      navigate(`/article/${encodeURIComponent(articleData.title)}`);
+      console.log('EditorPage: Saving article', formTitle);
+      const articleRef = ref(database, `articles/${encodeURIComponent(formTitle)}`);
+      await set(articleRef, {
+        title: formTitle,
+        content,
+        lastEdited: new Date().toISOString(),
+        author: { id: user.uid, email: user.email }
+      });
+      navigate(`/article/${encodeURIComponent(formTitle)}`);
     } catch (err) {
-      setError('Failed to save article: ' + err.message);
+      console.error('EditorPage: Save error', err);
+      setError('Failed to save article');
     }
   };
 
+  if (!user) return <div className="error">Please log in to {mode} articles</div>;
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="error">{error}</div>;
-  if (!initialArticle) return <div>Article not found</div>;
 
   return (
-    <div className="edit-page">
-      <h1>Edit Article</h1>
-      <ArticleEditor
-        initialTitle={initialArticle.title}
-        initialContent={initialArticle.content}
-        onSave={handleSave}
-      />
+    <div className="editor">
+      <h1>{mode === 'create' ? 'Create Article' : 'Edit Article'}</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Title</label>
+          <input
+            type="text"
+            value={formTitle}
+            onChange={(e) => setFormTitle(e.target.value)}
+            disabled={mode === 'edit'}
+          />
+        </div>
+        <div className="form-group">
+          <label>Content (Markdown supported)</label>
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+        </div>
+        <button type="submit">Save</button>
+      </form>
     </div>
   );
 }
 
-export default EditPage;
+export default EditorPage;
