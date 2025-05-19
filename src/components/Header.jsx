@@ -1,3 +1,4 @@
+import React from 'react'; // Added
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase/config';
 import { signOut } from 'firebase/auth';
