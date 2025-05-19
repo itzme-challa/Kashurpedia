@@ -1,7 +1,7 @@
 // CreatePage.jsx
 import { useNavigate } from 'react-router-dom';
 import { ref, set } from 'firebase/database';
-import { database, auth } from '../firebase/config';
+import { database } from '../firebase/config'; // Removed unused auth
 import ArticleEditor from '../components/ArticleEditor';
 
 function CreatePage() {
