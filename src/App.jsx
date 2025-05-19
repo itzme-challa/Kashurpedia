@@ -4,7 +4,7 @@ import { auth } from './firebase/config';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import ArticlePage from './pages/ArticlePage';
-import EditorPage from './pages/EditorPage';
+import EditorPage from './components/ArticleEditor.jsx';
 
 console.log('App.jsx: Loaded');
 
