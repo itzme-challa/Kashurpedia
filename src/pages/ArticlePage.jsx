@@ -1,9 +1,10 @@
+import React from 'react'; // Added
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ref, get } from 'firebase/database';
 import { database } from '../firebase/config';
 import Article from '../components/Article';
-import { Helmet } from 'react-helmet-async'; // Add react-helmet-async for SEO
+import { Helmet } from 'react-helmet-async';
 
 function ArticlePage() {
   const { title } = useParams();
@@ -16,7 +17,7 @@ function ArticlePage() {
       try {
         const articleRef = ref(database, `articles/${encodeURIComponent(title)}`);
         const snapshot = await get(articleRef);
-
+        
         if (snapshot.exists()) {
           setArticle(snapshot.val());
         } else {
