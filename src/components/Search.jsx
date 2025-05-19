@@ -1,3 +1,4 @@
+import React from 'react'; // Added
 import { useState } from 'react';
 import { ref, get } from 'firebase/database';
 import { database } from '../firebase/config';
