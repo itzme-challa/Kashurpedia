@@ -1,4 +1,4 @@
-// HomePage.jsx
+import React from 'react'; // Added
 import { useEffect, useState } from 'react';
 import { ref, get } from 'firebase/database';
 import { database } from '../firebase/config';
@@ -17,7 +17,6 @@ function HomePage() {
         
         if (snapshot.exists()) {
           const articles = Object.values(snapshot.val());
-          // Sort by last edited date
           const sorted = articles.sort((a, b) => 
             new Date(b.lastEdited) - new Date(a.lastEdited));
           setFeaturedArticles(sorted.slice(0, 3));
