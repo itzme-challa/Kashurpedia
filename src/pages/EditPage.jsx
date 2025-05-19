@@ -1,30 +1,28 @@
-// src/pages/EditPage.jsx
-import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ref, get, set } from 'firebase/database';
-import { database } from '../firebase/config';
+import { database, auth } from '../firebase/config';
 import ArticleEditor from '../components/ArticleEditor';
 
 function EditPage() {
-  const { title } = useParams(); // expects route like /edit/:title
+  const { title } = useParams();
   const navigate = useNavigate();
-  const [initialData, setInitialData] = useState(null);
+  const [initialArticle, setInitialArticle] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchArticle = async () => {
       try {
         const articleRef = ref(database, `articles/${encodeURIComponent(title)}`);
         const snapshot = await get(articleRef);
-
+        
         if (snapshot.exists()) {
-          setInitialData(snapshot.val());
+          setInitialArticle(snapshot.val());
         } else {
-          setLoadError('Article not found');
+          setError('Article not found');
         }
       } catch (err) {
-        setLoadError('Failed to load article: ' + err.message);
+        setError('Failed to load article: ' + err.message);
       } finally {
         setLoading(false);
       }
@@ -33,21 +31,26 @@ function EditPage() {
     fetchArticle();
   }, [title]);
 
-  const handleSave = async (updatedArticle) => {
-    const articleRef = ref(database, `articles/${encodeURIComponent(title)}`);
-    await set(articleRef, updatedArticle);
-    navigate(`/article/${encodeURIComponent(title)}`);
+  const handleSave = async (articleData) => {
+    try {
+      const articleRef = ref(database, `articles/${encodeURIComponent(articleData.title)}`);
+      await set(articleRef, articleData);
+      navigate(`/article/${encodeURIComponent(articleData.title)}`);
+    } catch (err) {
+      setError('Failed to save article: ' + err.message);
+    }
   };
 
-  if (loading) return <p>Loading article...</p>;
-  if (loadError) return <p className="error">{loadError}</p>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="error">{error}</div>;
+  if (!initialArticle) return <div>Article not found</div>;
 
   return (
     <div className="edit-page">
-      <h2>Edit Article</h2>
+      <h1>Edit Article</h1>
       <ArticleEditor
-        initialTitle={title}
-        initialContent={initialData?.content || ''}
+        initialTitle={initialArticle.title}
+        initialContent={initialArticle.content}
         onSave={handleSave}
       />
     </div>
