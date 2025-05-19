@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase/config';
-import { marked } from 'marked'; // Add marked for Markdown rendering
+import { marked } from 'marked';
 
 function Article({ title, content, lastEdited, author }) {
   const canEdit = auth.currentUser && 
     (auth.currentUser.uid === author.id || auth.currentUser.isAdmin);
 
-  // Configure marked for safe rendering
   marked.setOptions({
     breaks: true,
     gfm: true,
