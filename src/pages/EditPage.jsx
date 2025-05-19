@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'; // Added missing imports
 import { useParams, useNavigate } from 'react-router-dom';
 import { ref, get, set } from 'firebase/database';
 import { database, auth } from '../firebase/config';
