@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import { ref, get, set } from 'firebase/database';
-import { database, auth } from '../firebase/config';
-
+import { useState } from 'react'; // Removed unused useEffect
+import { ref, get } from 'firebase/database'; // Removed unused set
+import { database } from '../firebase/config'; // Removed unused auth
 function ArticleEditor({ initialTitle = '', initialContent = '', onSave }) {
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
