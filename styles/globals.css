@@ -1,3 +1,4 @@
+/* === Wikipedia-inspired responsive styles === */
 :root {
   --background-color: #f6f6f6;
   --content-background: #f8f9fa;
@@ -9,202 +10,207 @@
   --header-border: #a2a9b1;
 }
 
-/* Base styles */
+/* Base reset for full-width mobile */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--background-color);
-  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Full-width container for mobile */
+.container {
+  width: 100%;
   padding: 0;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-a {
-  color: var(--link-color);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Content area - now borderless */
+/* Content area - Wikipedia-style */
 .wiki-content {
   background-color: var(--content-background);
   padding: 1rem;
-  margin: 0;
-  line-height: 1.6;
+  width: 100%;
 }
 
 .wiki-content h1 {
-  font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+  font-size: 1.8rem;
   line-height: 1.3;
-  margin: 0.5em 0 0.25em 0;
-  padding: 0;
-  font-size: 1.8em;
+  margin: 0.5rem 0;
+  padding-bottom: 0.25rem;
   border-bottom: 1px solid var(--header-border);
 }
 
-/* Forms */
+/* Forms - full width on mobile */
 .wiki-form {
-  max-width: 50em;
-  margin: 0 auto;
+  width: 100%;
+  padding: 0 1rem;
 }
 
 .wiki-form input,
 .wiki-form textarea,
 .wiki-form select {
   width: 100%;
-  box-sizing: border-box;
   border: 1px solid #a2a9b1;
-  padding: 0.5em;
-  margin-bottom: 0.8em;
-  font-size: 1em;
-  font-family: inherit;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
 }
 
 .wiki-form textarea {
-  min-height: 20em;
+  min-height: 15rem;
   font-family: monospace;
 }
 
-.wiki-form label {
-  display: block;
-  margin-bottom: 0.3em;
-  font-weight: bold;
-}
-
+/* Buttons */
 button {
   background-color: var(--button-color);
   color: white;
-  border: 1px solid #36c;
-  padding: 0.5em 1em;
-  border-radius: 2px;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 1em;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
-button:hover {
-  background-color: var(--button-hover-color);
-}
-
-/* Responsive category and article lists */
+/* Lists - single column on mobile */
 .category-list {
-  column-count: 1;
-  column-gap: 2em;
-  margin-top: 1em;
+  display: block;
+  width: 100%;
+  padding: 0 1rem;
 }
 
 .article-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0.3em 0 0 0;
+  list-style: none;
+  width: 100%;
 }
 
 .article-list li {
-  margin-bottom: 0.4em;
-  line-height: 1.6;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eaecf0;
+}
+
+/* Navigation - mobile first */
+.navbar {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--content-background);
+  border-bottom: 1px solid var(--header-border);
+}
+
+/* Search bar - full width */
+.search-container {
+  width: 100%;
+  padding: 0 1rem;
+  margin: 1rem 0;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 0.75rem;
 }
 
 /* Message boxes */
 .message-box {
-  border: 1px solid #a2a9b1;
+  width: calc(100% - 2rem);
+  margin: 1rem;
+  padding: 1rem;
   background-color: #f8f9fa;
-  padding: 0.5em 1em;
-  margin: 1em 0;
+  border-left: 4px solid #36c;
 }
 
-.error-message {
-  color: #d33;
-  background-color: #fee7e6;
-  border: 1px solid #fac5c5;
-  padding: 0.5em 1em;
-  margin: 1em 0;
-}
-
-.success-message {
-  color: #14866d;
-  background-color: #e6f3f0;
-  border: 1px solid #a3bfb1;
-  padding: 0.5em 1em;
-  margin: 1em 0;
-}
-
-/* Search bar */
-.search-container {
-  margin: 1em 0;
-}
-
-.search-container input[type="search"] {
-  width: 100%;
-  padding: 0.5em;
-  border: 1px solid #a2a9b1;
-  border-radius: 2px;
-  font-size: 1em;
-}
-
-/* Responsive adjustments */
+/* === Tablet (600px+) === */
 @media (min-width: 600px) {
-  .container {
-    padding: 0 1.5rem;
-  }
-  
   .wiki-content {
     padding: 1.5rem;
   }
   
+  button {
+    width: auto;
+  }
+  
   .category-list {
     column-count: 2;
+    column-gap: 2rem;
   }
 }
 
+/* === Desktop (900px+) === */
 @media (min-width: 900px) {
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .wiki-form {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
   .category-list {
     column-count: 3;
   }
   
-  .search-container input[type="search"] {
-    max-width: 20em;
+  .search-container input {
+    max-width: 400px;
   }
 }
 
-/* Mobile menu toggle (add this to your NavBar component) */
-.mobile-menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .mobile-menu-toggle {
-    display: block;
-  }
-  
-  /* Example nav menu adjustment - implement based on your NavBar */
-  .nav-links {
+/* === Mobile menu specific === */
+@media (max-width: 599px) {
+  /* Hide desktop navigation */
+  .desktop-nav {
     display: none;
-    flex-direction: column;
-    width: 100%;
   }
   
-  .nav-links.active {
-    display: flex;
+  /* Mobile menu button */
+  .mobile-menu-button {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+  }
+  
+  /* Mobile menu */
+  .mobile-menu {
+    width: 100%;
+    background: white;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--header-border);
+  }
+  
+  .mobile-menu a {
+    display: block;
+    padding: 1rem;
+    border-top: 1px solid #eaecf0;
   }
 }
 
-/* Footer */
-.footer {
-  margin-top: 2em;
-  padding-top: 1em;
-  border-top: 1px solid #a2a9b1;
-  font-size: 0.85em;
-  color: #54595d;
+/* === Print styles === */
+@media print {
+  .navbar, .mobile-menu-button {
+    display: none;
+  }
+  
+  .wiki-content {
+    background: white;
+    padding: 0;
+  }
+  
+  a {
+    color: black;
+    text-decoration: underline;
+  }
 }
