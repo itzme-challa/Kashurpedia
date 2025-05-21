@@ -1,4 +1,7 @@
 /* Use a Wikipedia-like font stack */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 body {
   font-family: 'Linux Libertine', 'Georgia', 'Times New Roman', Times, serif;
   background-color: #f8f9fa;
