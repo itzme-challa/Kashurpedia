@@ -1,110 +1,70 @@
 import { useState } from "react";
 import { register } from "../../utils/auth";
 import { useRouter } from "next/router";
-import NavBar from "../../components/NavBar";
+import Layout from "../../components/Layout";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const validateForm = () => {
-    if (!username || username.length < 3) {
-      setError("Username must be at least 3 characters.");
-      return false;
-    }
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Please enter a valid email.");
-      return false;
-    }
-    if (!password || password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return false;
-    }
-    return true;
-  };
-
-  const handleSignup = async () => {
-    setError("");
-    if (!validateForm()) return;
-    setLoading(true);
+  const handleSignup = async (e) => {
+    e.preventDefault();
     try {
       await register(email, password, username);
       router.push("/");
     } catch (err) {
-      setError("Failed to register. Please try again.");
-      setLoading(false);
+      setError(err.message);
     }
   };
 
   return (
-    <div className="container min-h-screen">
-      <NavBar />
-      <div className="max-w-md mx-auto mt-8">
-        <h1>Create a Kashurpedia Account</h1>
-        {error && <p className="text-red-600 mb-4">{error}</p>}
-        <form className="space-y-4">
+    <Layout>
+      <div className="wiki-content">
+        <h1>Create a Kashurpedia account</h1>
+        {error && <div className="error-message" style={{color: 'red'}}>{error}</div>}
+        <form onSubmit={handleSignup} className="wiki-form">
           <div>
-            <label htmlFor="username" className="block text-sm font-medium">
-              Username
-            </label>
+            <label htmlFor="username">Username:</label>
             <input
               id="username"
               type="text"
-              placeholder="Username"
+              placeholder="Choose a username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mt-1"
-              aria-required="true"
+              required
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium">
-              Email
-            </label>
+            <label htmlFor="email">Email:</label>
             <input
               id="email"
               type="email"
-              placeholder="Email"
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1"
-              aria-required="true"
+              required
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium">
-              Password
-            </label>
+            <label htmlFor="password">Password:</label>
             <input
               id="password"
               type="password"
-              placeholder="Password"
+              placeholder="Create a password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1"
-              aria-required="true"
+              required
             />
           </div>
-          <button
-            type="button"
-            onClick={handleSignup}
-            disabled={loading}
-            className="w-full"
-          >
-            {loading ? "Registering..." : "Register"}
-          </button>
-          <p className="text-sm">
-            Already have an account?{" "}
-            <Link href="/auth/login" className="text-blue-600 hover:underline">
-              Log in
-            </Link>
-          </p>
+          <button type="submit">Create account</button>
         </form>
+        <div style={{ marginTop: '20px' }}>
+          <p>Already have an account? <a href="/auth/login">Log in</a></p>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }
