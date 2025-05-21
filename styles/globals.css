@@ -1,192 +1,305 @@
-/* === Wikipedia-style full-width responsive layout === */
+/* === Enhanced Wikipedia-inspired responsive styles === */
 :root {
-  --background-color: #f6f6f6;
-  --content-background: #f8f9fa;
-  --link-color: #0645ad;
-  --link-hover-color: #0b0080;
-  --button-color: #36c;
-  --button-hover-color: #447ff5;
-  --text-color: #202122;
-  --header-border: #a2a9b1;
+  --background-color: #f5f5f5; /* Softer background */
+  --content-background: #ffffff; /* Cleaner white for content */
+  --link-color: #1a5fb4; /* Slightly brighter blue for links */
+  --link-hover-color: #003087; /* Darker hover for contrast */
+  --button-color: #2a4b8d; /* Professional blue for buttons */
+  --button-hover-color: #3b6ad8; /* Lighter hover for interactivity */
+  --text-color: #1c2526; /* Higher contrast text */
+  --header-border: #c8ccd1; /* Subtle border color */
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  --transition: 0.2s ease; /* Smooth transitions */
 }
 
-/* Full-width base styles */
-body, html {
-  width: 100%;
+/* Base reset */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
   font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
-  line-height: 1.6;
+  line-height: 1.7;
   color: var(--text-color);
   background-color: var(--background-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px; /* Base font size for accessibility */
 }
 
-/* Full-width containers */
-.container, 
-.wiki-content,
-.wiki-form,
-.search-container,
-.category-list,
-.article-list,
-.message-box {
+/* Full-width container for mobile */
+.container {
   width: 100%;
+  margin: 0 auto;
 }
 
-/* Content area */
+/* Content area - Enhanced Wikipedia style */
 .wiki-content {
   background-color: var(--content-background);
-  padding: 1rem;
+  padding: 1.25rem;
+  width: 100%;
+  box-shadow: var(--shadow);
+  border-radius: 4px; /* Subtle rounding */
 }
 
 .wiki-content h1 {
-  font-size: 1.8rem;
-  padding-bottom: 0.25rem;
-  border-bottom: 1px solid var(--header-border);
-  margin: 0.5rem 0 1rem 0;
+  font-size: 2rem;
+  line-height: 1.4;
+  margin: 0.75rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--header-border);
+  font-weight: 500; /* Slightly lighter for elegance */
 }
 
-/* Full-width forms */
+/* Forms - Clean and accessible */
 .wiki-form {
-  padding: 0 1rem;
-}
-
-.wiki-form input,
-.wiki-form textarea,
-.wiki-form select,
-.wiki-form button {
   width: 100%;
-  display: block;
-  margin-bottom: 1rem;
+  padding: 0 1.25rem;
 }
 
 .wiki-form input,
 .wiki-form textarea,
 .wiki-form select {
-  border: 1px solid #a2a9b1;
-  padding: 0.75rem;
+  width: 100%;
+  border: 1px solid var(--header-border);
+  padding: 0.875rem;
+  margin-bottom: 1.25rem;
   font-size: 1rem;
-  background: white;
+  border-radius: 4px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.wiki-form input:focus,
+.wiki-form textarea:focus,
+.wiki-form select:focus {
+  outline: none;
+  border-color: var(--button-color);
+  box-shadow: 0 0 0 3px rgba(42, 75, 141, 0.2); /* Focus ring */
 }
 
 .wiki-form textarea {
-  min-height: 15rem;
-  font-family: monospace;
+  min-height: 12rem;
+  font-family: 'Courier New', monospace;
+  resize: vertical; /* Allow vertical resize only */
 }
 
-.wiki-form button {
+/* Buttons - Modern and accessible */
+button {
   background-color: var(--button-color);
   color: white;
   border: none;
-  padding: 0.75rem;
+  padding: 0.875rem 1.75rem;
   font-size: 1rem;
   cursor: pointer;
-}
-
-/* Full-width search */
-.search-container {
-  padding: 0 1rem;
-  margin: 1rem 0;
-}
-
-.search-container input {
+  border-radius: 4px;
+  transition: background-color var(--transition), transform var(--transition);
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #a2a9b1;
+  margin-bottom: 1.25rem;
 }
 
-/* Full-width lists */
+button:hover {
+  background-color: var(--button-hover-color);
+  transform: translateY(-1px); /* Subtle lift effect */
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(42, 75, 141, 0.3);
+}
+
+/* Lists - Clean and minimal */
 .category-list {
-  padding: 0 1rem;
+  display: block;
+  width: 100%;
+  padding: 0 1.25rem;
 }
 
 .article-list {
   list-style: none;
+  width: 100%;
 }
 
 .article-list li {
   padding: 0.75rem 0;
-  border-bottom: 1px solid #eaecf0;
+  border-bottom: 1px solid #e6e8ea;
+  transition: background-color var(--transition);
 }
 
-.article-list li a {
-  display: block;
-  padding: 0.5rem 0;
+.article-list li:hover {
+  background-color: #f8f9fa; /* Subtle hover effect */
 }
 
-/* Full-width messages */
-.message-box,
-.error-message,
-.success-message {
-  width: 100%;
-  padding: 1rem;
-  margin: 1rem 0;
-}
-
-.error-message {
-  background-color: #fee7e6;
-  border-left: 4px solid #d33;
-}
-
-.success-message {
-  background-color: #e6f3f0;
-  border-left: 4px solid #14866d;
-}
-
-/* Navigation */
+/* Navigation - Mobile-first */
 .navbar {
   width: 100%;
   padding: 1rem;
   background-color: var(--content-background);
   border-bottom: 1px solid var(--header-border);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-/* Responsive adjustments */
-@media (min-width: 900px) {
+/* Links */
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* Search bar - Full width on mobile */
+.search-container {
+  width: 100%;
+  padding: 0 1.25rem;
+  margin: 1.25rem 0;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 0.875rem;
+  border-radius: 4px;
+  border: 1px solid var(--header-border);
+  font-size: 1rem;
+  transition: border-color var(--transition);
+}
+
+.search-container input:focus {
+  border-color: var(--button-color);
+  box-shadow: 0 0 0 3px rgba(42, 75, 141, 0.2);
+}
+
+/* Message boxes - Clean and noticeable */
+.message-box {
+  width: calc(100% - 2.5rem);
+  margin: 1.25rem;
+  padding: 1.25rem;
+  background-color: #f8f9fa;
+  border-left: 5px solid var(--button-color);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+}
+
+/* === Tablet (600px+) === */
+@media (min-width: 600px) {
   .wiki-content {
-    padding: 1.5rem 2rem;
+    padding: 2rem;
   }
-  
-  /* Keep forms full-width but limit max-width */
-  .wiki-form {
-    max-width: 800px;
+
+  button {
+    width: auto;
+  }
+
+  .category-list {
+    column-count: 2;
+    column-gap: 2.5rem;
+  }
+
+  .search-container input {
+    max-width: 500px;
+  }
+}
+
+/* === Desktop (900px+) === */
+@media (min-width: 900px) {
+  .container {
+    max-width: 1280px; /* Slightly wider for modern screens */
     margin: 0 auto;
-    padding: 0;
   }
-  
-  /* Search bar stays full-width but with max-width */
-  .search-container {
-    max-width: 800px;
-    margin: 1rem auto;
-    padding: 0;
+
+  .wiki-form {
+    max-width: 900px;
+    margin: 0 auto;
   }
-  
-  /* Category lists can use columns now */
+
   .category-list {
     column-count: 3;
-    column-gap: 2rem;
+    column-gap: 3rem;
+  }
+
+  .search-container input {
+    max-width: 600px;
   }
 }
 
-/* Mobile menu toggle */
-.mobile-menu-button {
-  display: none;
-}
+/* === Mobile menu specific === */
+@media (max-width: 599px) {
+  .desktop-nav {
+    display: none;
+  }
 
-@media (max-width: 600px) {
   .mobile-menu-button {
     display: block;
     background: none;
     border: none;
-    font-size: 1.5rem;
-    padding: 0.5rem 1rem;
+    font-size: 1.75rem;
+    padding: 0.75rem;
+    cursor: pointer;
+    color: var(--text-color);
   }
-  
-  /* Ensure mobile menu is full-width */
+
   .mobile-menu {
-    width: 100vw;
+    width: 100%;
+    background: var(--content-background);
     position: absolute;
+    top: 100%;
     left: 0;
-    background: white;
+    z-index: 1000;
     border-bottom: 1px solid var(--header-border);
+    box-shadow: var(--shadow);
+    transform: translateY(-10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform var(--transition), opacity var(--transition);
+  }
+
+  .mobile-menu.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-menu a {
+    display: block;
+    padding: 1.25rem;
+    border-top: 1px solid #e6e8ea;
+    color: var(--link-color);
+    transition: background-color var(--transition);
+  }
+
+  .mobile-menu a:hover {
+    background-color: #f8f9fa;
+  }
+}
+
+/* === Print styles === */
+@media print {
+  .navbar,
+  .mobile-menu-button,
+  .mobile-menu {
+    display: none;
+  }
+
+  .wiki-content {
+    background: white;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+
+  .message-box {
+    border: 1px solid #000;
   }
 }
