@@ -1,16 +1,79 @@
-/* === Global Styles === */
-body {
-  font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
-  line-height: 1.6;
-  color: #202122;
+/* === Ultra-Responsive Wikipedia-Style CSS === */
+:root {
+  --background-color: #f8f9fa;
+  --content-background: #ffffff;
+  --link-color: #0645ad;
+  --link-hover-color: #0b0080;
+  --button-color: #36c;
+  --button-hover-color: #447ff5;
+  --text-color: #202122;
+  --border-color: #a2a9b1;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Base Reset */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+/* Full-Width Body */
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+/* Content Area - Pure Wikipedia Style */
+.wiki-content {
+  width: 100%;
+  padding: 1rem;
+}
+
+.wiki-content h1 {
+  font-size: 1.8em;
+  margin: 0.5em 0;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Forms - Full Width Always */
+.wiki-form {
   width: 100%;
 }
 
-/* Links */
+.wiki-form input,
+.wiki-form textarea,
+.wiki-form select {
+  width: 100%;
+  padding: 0.75em;
+  margin-bottom: 1em;
+  border: 1px solid var(--border-color);
+  font-family: inherit;
+  font-size: 1em;
+}
+
+.wiki-form textarea {
+  min-height: 20em;
+  font-family: monospace;
+}
+
+.wiki-form button {
+  width: 100%;
+  padding: 0.75em;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  font-size: 1em;
+}
+
+/* Links - Wikipedia Style */
 a {
-  color: #202122;
+  color: var(--link-color);
   text-decoration: none;
 }
 
@@ -18,170 +81,130 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Layout */
-.full-width-container {
-  width: 100%;
-  padding: 0;
-}
-
-/* Navigation */
+/* Navigation - Full Width */
 .navbar {
   width: 100%;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #a7d7f9;
+  padding: 0.75em 1em;
+  background-color: var(--content-background);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f8f9fa;
-}
-
-.nav-brand {
-  font-weight: bold;
-  font-size: 1.25rem;
 }
 
 .nav-links {
   display: flex;
-  gap: 1.25rem;
-  align-items: center;
+  gap: 1em;
 }
 
-.nav-link {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.nav-button {
-  background: transparent;
-  border: 1px solid #36c;
-  color: #36c;
-  padding: 0.4rem 0.75rem;
-  border-radius: 3px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Auth Pages */
-.auth-page {
+/* Search - Full Width */
+.search-container {
   width: 100%;
-  padding: 2rem 1rem;
+  padding: 0 1em;
 }
 
-.auth-form {
+.search-container input {
   width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
+  padding: 0.75em;
+  border: 1px solid var(--border-color);
 }
 
-.auth-form-group {
-  margin-bottom: 1.25rem;
-}
-
-.auth-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-.auth-form input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #a2a9b1;
-  border-radius: 3px;
-}
-
-.auth-form button {
-  width: 100%;
-  padding: 0.75rem;
-  background: #36c;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.auth-form-footer {
-  margin-top: 1.5rem;
-  text-align: center;
-}
-
-/* Posts */
+/* Posts/Categories - Full Width */
 .category-container {
   width: 100%;
-  padding: 1rem;
+  padding: 1em;
 }
 
 .category-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.25rem;
-  border-bottom: 1px solid #a2a9b1;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .post-list {
   width: 100%;
   column-count: 1;
-  column-gap: 2rem;
 }
 
 .post-item {
   break-inside: avoid;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.75rem;
+  padding: 0.5em 0;
   border-bottom: 1px solid #eaecf0;
 }
 
-/* Search */
-.search-container {
-  width: 100%;
-  padding: 1rem;
-}
-
-.search-input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #a2a9b1;
-  border-radius: 3px;
+/* Mobile Menu */
+.mobile-menu-button {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  padding: 0.5em;
 }
 
 /* Mobile Styles */
 @media (max-width: 768px) {
-  .nav-link-text {
+  .nav-text {
     display: none;
   }
   
-  .nav-icon {
-    font-size: 1.25rem;
+  .mobile-menu-button {
+    display: block;
   }
   
-  .nav-button-text {
+  .nav-links {
     display: none;
-  }
-  
-  .welcome-message {
-    display: none;
-  }
-  
-  /* Tooltips */
-  .nav-link:hover::before,
-  .nav-button:hover::before {
-    content: attr(data-tooltip);
     position: absolute;
-    bottom: -2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #202122;
-    color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 3px;
-    font-size: 0.875rem;
-    white-space: nowrap;
-    z-index: 100;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .nav-links a {
+    padding: 1em;
+    border-top: 1px solid #eaecf0;
+  }
+  
+  /* Font Awesome Icons */
+  .mobile-menu-button::before {
+    content: "\f0c9";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+  }
+  
+  .nav-links a[href="/"]::before {
+    content: "\f015";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 0.5em;
+  }
+  
+  .nav-links a[href="/submit"]::before {
+    content: "\f067";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 0.5em;
+  }
+  
+  .nav-links a[href="/auth/login"]::before {
+    content: "\f2f6";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 0.5em;
+  }
+  
+  .nav-links a[href="/auth/signup"]::before {
+    content: "\f234";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 0.5em;
   }
 }
 
@@ -189,23 +212,39 @@ a:hover {
 @media (min-width: 769px) {
   .post-list {
     column-count: 3;
+    column-gap: 2em;
   }
   
-  .nav-link-text {
-    display: inline-block;
+  .nav-text {
+    display: inline;
   }
   
-  .nav-button-text {
-    display: inline-block;
+  /* Font Awesome Icons with Text */
+  .nav-links a[href="/"]::before {
+    content: "\f015";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 0.3em;
   }
   
-  .welcome-message {
-    display: inline-block;
-    font-size: 0.9rem;
-    margin-right: 0.5rem;
+  .nav-links a[href="/submit"]::before {
+    content: "\f067";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 0.3em;
   }
   
-  .auth-page {
-    padding: 3rem 1rem;
+  .nav-links a[href="/auth/login"]::before {
+    content: "\f2f6";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 0.3em;
+  }
+  
+  .nav-links a[href="/auth/signup"]::before {
+    content: "\f234";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 0.3em;
   }
 }
