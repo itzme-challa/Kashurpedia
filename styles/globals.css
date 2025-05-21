@@ -1,70 +1,151 @@
+/* Define CSS variables for a cohesive color scheme */
 :root {
-  --background-color: #f6f6f6;
-  --header-color: #f8f9fa;
-  --border-color: #a7d7f9;
-  --link-color: #0645ad;
-  --link-hover-color: #0b0080;
-  --button-color: #36c;
-  --button-hover-color: #447ff5;
+  --background-color: #f8f9fa; /* Light gray for a clean, modern look */
+  --header-color: #ffffff; /* White for headers to stand out */
+  --border-color: #d1e0ff; /* Softer blue for borders */
+  --link-color: #1a73e8; /* Modern blue for links, inspired by Wikipedia */
+  --link-hover-color: #174ea6; /* Darker blue for hover */
+  --button-color: #1a73e8; /* Vibrant blue for buttons */
+  --button-hover-color: #1557b0; /* Slightly darker for hover */
+  --text-color: #202122; /* Wikipedia-like text color */
+  --accent-color: #f4f7fb; /* Subtle background for content areas */
+  --shadow-color: rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  --transition: all 0.2s ease-in-out; /* Smooth transitions */
+}
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
 }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  line-height: 1.6;
-  color: #202122;
+  font-family: 'Linux Libertine', 'Georgia', 'Times New Roman', Times, serif; /* Wikipedia-inspired serif font */
+  line-height: 1.7;
+  color: var(--text-color);
   background-color: var(--background-color);
   margin: 0;
   padding: 0;
+  font-size: 16px;
 }
 
+/* Container for main content */
 .container {
-  max-width: 1200px;
+  max-width: 1280px; /* Slightly wider for modern screens */
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 20px;
 }
 
+/* Header styling */
+header {
+  background-color: var(--header-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: var(--text-color);
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  color: var(--link-color);
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+nav a:hover {
+  color: var(--link-hover-color);
+  text-decoration: none;
+  border-bottom: 2px solid var(--link-hover-color);
+}
+
+/* Links */
 a {
   color: var(--link-color);
   text-decoration: none;
+  transition: var(--transition);
 }
 
 a:hover {
-  text-decoration: underline;
   color: var(--link-hover-color);
+  text-decoration: underline;
 }
 
+/* Form elements */
 input, textarea, select {
-  border: 1px solid #a2a9b1;
-  padding: 8px;
-  border-radius: 2px;
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  border-radius: 4px;
   font-size: 16px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  transition: var(--transition);
+  background-color: #fff;
 }
 
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--link-color);
+  box-shadow: 0 0 5px rgba(26, 115, 232, 0.3);
+}
+
+/* Buttons */
 button {
   background-color: var(--button-color);
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 2px;
+  padding: 10px 20px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 500;
+  transition: var(--transition);
 }
 
 button:hover {
   background-color: var(--button-hover-color);
+  transform: translateY(-1px);
 }
 
+button:active {
+  transform: translateY(0);
+}
+
+/* Wiki content area */
 .wiki-content {
-  background-color: white;
-  border: 1px solid #a7d7f9;
-  padding: 20px;
-  margin-top: 20px;
+  background-color: var(--accent-color); /* Subtle background instead of white */
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 30px;
+  margin-top: 30px;
+  box-shadow: 0 4px 12px var(--shadow-color);
 }
 
+/* Wiki form */
 .wiki-form {
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: var(--header-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px var(--shadow-color);
 }
 
 .wiki-form input,
@@ -75,19 +156,82 @@ button:hover {
 }
 
 .wiki-form textarea {
-  min-height: 300px;
+  min-height: 400px;
+  resize: vertical;
 }
 
+/* Category list */
 .category-list {
   column-count: 3;
-  column-gap: 20px;
+  column-gap: 30px;
+  margin-top: 20px;
 }
 
+.category-list a {
+  display: block;
+  padding: 8px 0;
+  font-size: 1.1rem;
+  transition: var(--transition);
+}
+
+.category-list a:hover {
+  background-color: var(--border-color);
+  border-radius: 4px;
+  padding-left: 8px;
+}
+
+/* Article list */
 .article-list {
   list-style-type: none;
   padding: 0;
 }
 
 .article-list li {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  padding: 10px;
+  border-left: 4px solid var(--link-color);
+  background-color: var(--header-color);
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.article-list li:hover {
+  background-color: var(--accent-color);
+  transform: translateX(5px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .category-list {
+    column-count: 2;
+  }
+
+  header .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .wiki-form {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-list {
+    column-count: 1;
+  }
+
+  .wiki-content {
+    padding: 15px;
+  }
 }
