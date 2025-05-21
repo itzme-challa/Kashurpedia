@@ -1,1 +1,209 @@
+/* === Minimal Wikipedia-style Layout === */
+body {
+  font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+  line-height: 1.6;
+  color: #202122;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
 
+/* Links */
+a {
+  color: #202122; /* Black color */
+  text-decoration: none; /* No underline */
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Navigation */
+.navbar {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #a7d7f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link-text {
+  display: inline-block;
+}
+
+.nav-button {
+  background: transparent;
+  border: 1px solid #36c;
+  color: #36c;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Auth Forms */
+.auth-container {
+  width: 100%;
+  padding: 1rem;
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #a2a9b1;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #36c;
+  color: white;
+  border: none;
+}
+
+/* Posts/Categories */
+.category-container {
+  width: 100%;
+  padding: 1rem;
+}
+
+.category-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #a2a9b1;
+  padding-bottom: 0.25rem;
+}
+
+.post-list {
+  width: 100%;
+  column-count: 1;
+  column-gap: 2rem;
+}
+
+.post-item {
+  break-inside: avoid;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eaecf0;
+}
+
+/* Search */
+.search-container {
+  width: 100%;
+  padding: 1rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #a2a9b1;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .nav-link-text {
+    display: none;
+  }
+  
+  .nav-link::after {
+    font-family: 'Font Awesome';
+    content: attr(data-icon);
+    font-size: 1.25rem;
+  }
+  
+  .nav-link[href="/"]::after {
+    content: "\f015"; /* home icon */
+  }
+  
+  .nav-link[href="/submit"]::after {
+    content: "\f067"; /* plus icon */
+  }
+  
+  .nav-link[href="/auth/login"]::after {
+    content: "\f2f6"; /* sign-in icon */
+  }
+  
+  .nav-link[href="/auth/signup"]::after {
+    content: "\f234"; /* user-plus icon */
+  }
+  
+  .nav-button::after {
+    content: "\f2f5"; /* sign-out icon */
+    font-family: 'Font Awesome';
+    font-size: 1.25rem;
+  }
+  
+  .nav-button span {
+    display: none;
+  }
+  
+  .welcome-message {
+    display: none;
+  }
+  
+  /* Tooltip for mobile */
+  .nav-link:hover::before,
+  .nav-button:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #202122;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    z-index: 100;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 769px) {
+  .post-list {
+    column-count: 3;
+  }
+  
+  .nav-link::after {
+    display: none;
+  }
+  
+  .nav-link-text {
+    display: inline-block;
+  }
+  
+  .nav-button::after {
+    display: none;
+  }
+  
+  .nav-button span {
+    display: inline-block;
+  }
+  
+  .welcome-message {
+    display: inline-block;
+  }
+}
