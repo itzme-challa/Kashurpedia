@@ -7,46 +7,38 @@ export default function NavBar() {
   const [user] = useAuthState(auth);
 
   return (
-    <nav style={{
-      background: '#f8f9fa',
-      padding: '10px 0',
-      borderBottom: '1px solid #a7d7f9',
-      marginBottom: '20px'
-    }}>
-      <div className="container" style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <Link href="/" style={{ fontWeight: 'bold', fontSize: '20px' }}>
-            Kashurpedia
-          </Link>
-          <Link href="/submit">Submit Article</Link>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          {user ? (
-            <>
-              <span>Welcome, {user.displayName || user.email}</span>
-              <button 
-                onClick={() => signOut(auth)}
-                style={{
-                  background: 'transparent',
-                  color: '#36c',
-                  border: '1px solid #36c',
-                  padding: '5px 10px'
-                }}
-              >
-                Log out
-              </button>
-            </>
-          ) : (
-            <>
-              <Link href="/auth/login">Log in</Link>
-              <Link href="/auth/signup">Create account</Link>
-            </>
-          )}
-        </div>
+    <nav className="navbar">
+      <div className="nav-links">
+        <Link href="/" className="nav-link" data-icon="home" data-tooltip="Home">
+          <span className="nav-link-text">Kashurpedia</span>
+        </Link>
+        <Link href="/submit" className="nav-link" data-icon="add" data-tooltip="Submit Article">
+          <span className="nav-link-text">Submit</span>
+        </Link>
+      </div>
+      
+      <div className="nav-links">
+        {user ? (
+          <>
+            <span className="welcome-message">Welcome, {user.displayName || user.email}</span>
+            <button 
+              onClick={() => signOut(auth)}
+              className="nav-button"
+              data-tooltip="Log out"
+            >
+              <span>Log out</span>
+            </button>
+          </>
+        ) : (
+          <>
+            <Link href="/auth/login" className="nav-link" data-icon="login" data-tooltip="Log in">
+              <span className="nav-link-text">Log in</span>
+            </Link>
+            <Link href="/auth/signup" className="nav-link" data-icon="signup" data-tooltip="Create account">
+              <span className="nav-link-text">Create account</span>
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
