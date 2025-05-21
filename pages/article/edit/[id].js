@@ -4,6 +4,8 @@ import { db, auth } from "../../../utils/firebase";
 import { ref, get, update } from "firebase/database";
 import { useAuthState } from "react-firebase-hooks/auth";
 import NavBar from "../../../components/NavBar";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Head from "next/head";
 
 export default function EditArticle() {
   const router = useRouter();
@@ -11,6 +13,8 @@ export default function EditArticle() {
   const [article, setArticle] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [summary, setSummary] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [user] = useAuthState(auth);
 
   useEffect(() => {
@@ -24,6 +28,8 @@ export default function EditArticle() {
           setArticle({ ...art, category });
           setTitle(art.title);
           setContent(art.content);
+          setSummary(art.summary || "");
+          setImageUrl(art.imageUrl || "");
           break;
         }
       }
@@ -34,28 +40,87 @@ export default function EditArticle() {
     const updatedData = {
       title,
       content,
+      summary,
+      imageUrl,
       timestamp: Date.now(),
       versions: [
         ...(article.versions || []),
-        { title: article.title, content: article.content, timestamp: article.timestamp }
+        { 
+          title: article.title, 
+          content: article.content, 
+          summary: article.summary,
+          imageUrl: article.imageUrl,
+          timestamp: article.timestamp 
+        }
       ]
     };
     await update(ref(db, `articles/${article.category}/${id}`), updatedData);
     router.push(`/article/${id}`);
   };
 
-  if (!article) return <p>Loading...</p>;
-  if (user?.uid !== article.userId) return <p>Unauthorized</p>;
+  if (!article) return <div className="loading">Loading...</div>;
+  if (user?.uid !== article.userId) return <div className="unauthorized">Unauthorized</div>;
 
   return (
-    <div>
+    <div className="article-edit-container">
+      <Head>
+        <title>Editing: {title} - Kashurpedia</title>
+      </Head>
       <NavBar />
-      <h1>Edit Article</h1>
-      <input value={title} onChange={e => setTitle(e.target.value)} />
-      <br />
-      <textarea value={content} onChange={e => setContent(e.target.value)} rows={10} cols={50} />
-      <br />
-      <button onClick={handleUpdate}>Update</button>
+      
+      <div className="wiki-content">
+        <h1>Edit Article</h1>
+        
+        <div className="wiki-form">
+          <div className="form-group">
+            <label>Title:</label>
+            <input 
+              value={title} 
+              onChange={e => setTitle(e.target.value)} 
+              placeholder="Article title"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Summary:</label>
+            <textarea 
+              value={summary} 
+              onChange={e => setSummary(e.target.value)} 
+              placeholder="Brief summary of the article"
+              rows={3}
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Image URL:</label>
+            <input 
+              value={imageUrl} 
+              onChange={e => setImageUrl(e.target.value)} 
+              placeholder="https://example.com/image.jpg"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Content:</label>
+            <textarea 
+              value={content} 
+              onChange={e => setContent(e.target.value)} 
+              placeholder="Article content in Markdown format"
+              rows={15}
+            />
+            <small>You can use Markdown formatting</small>
+          </div>
+          
+          <div className="form-actions">
+            <button onClick={() => router.back()} className="cancel-btn">
+              <FontAwesomeIcon icon={faTimes} /> Cancel
+            </button>
+            <button onClick={handleUpdate} className="save-btn">
+              <FontAwesomeIcon icon={faSave} /> Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
