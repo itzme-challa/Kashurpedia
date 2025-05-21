@@ -9,7 +9,7 @@ export default function Submit() {
   const [user] = useAuthState(auth);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("General");
+  const [category, setCategory] = useState("Anantnag");
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -66,7 +66,7 @@ export default function Submit() {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option value="Anantnag">Anantnag</option>
+ <option value="Anantnag">Anantnag</option>
 <option value="Bandipora">Bandipora</option>
 <option value="Baramulla">Baramulla</option>
 <option value="Budgam">Budgam</option>
