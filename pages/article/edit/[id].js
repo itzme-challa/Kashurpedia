@@ -4,8 +4,9 @@ import { db, auth } from "../../../utils/firebase";
 import { ref, get, update } from "firebase/database";
 import { useAuthState } from "react-firebase-hooks/auth";
 import NavBar from "../../../components/NavBar";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Head from "next/head";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export default function EditArticle() {
   const router = useRouter();
@@ -45,12 +46,12 @@ export default function EditArticle() {
       timestamp: Date.now(),
       versions: [
         ...(article.versions || []),
-        { 
-          title: article.title, 
-          content: article.content, 
+        {
+          title: article.title,
+          content: article.content,
           summary: article.summary,
           imageUrl: article.imageUrl,
-          timestamp: article.timestamp 
+          timestamp: article.timestamp
         }
       ]
     };
@@ -58,59 +59,57 @@ export default function EditArticle() {
     router.push(`/article/${id}`);
   };
 
-  if (!article) return <div className="loading">Loading...</div>;
-  if (user?.uid !== article.userId) return <div className="unauthorized">Unauthorized</div>;
+  if (!article) return <p>Loading...</p>;
+  if (user?.uid !== article.userId) return <p>Unauthorized</p>;
 
   return (
-    <div className="article-edit-container">
+    <>
       <Head>
         <title>Editing: {title} - Kashurpedia</title>
       </Head>
       <NavBar />
-      
       <div className="wiki-content">
         <h1>Edit Article</h1>
-        
         <div className="wiki-form">
           <div className="form-group">
             <label>Title:</label>
-            <input 
-              value={title} 
-              onChange={e => setTitle(e.target.value)} 
+            <input
+              value={title}
+              onChange={e => setTitle(e.target.value)}
               placeholder="Article title"
             />
           </div>
-          
+
           <div className="form-group">
             <label>Summary:</label>
-            <textarea 
-              value={summary} 
-              onChange={e => setSummary(e.target.value)} 
+            <textarea
+              value={summary}
+              onChange={e => setSummary(e.target.value)}
               placeholder="Brief summary of the article"
               rows={3}
             />
           </div>
-          
+
           <div className="form-group">
             <label>Image URL:</label>
-            <input 
-              value={imageUrl} 
-              onChange={e => setImageUrl(e.target.value)} 
+            <input
+              value={imageUrl}
+              onChange={e => setImageUrl(e.target.value)}
               placeholder="https://example.com/image.jpg"
             />
           </div>
-          
+
           <div className="form-group">
             <label>Content:</label>
-            <textarea 
-              value={content} 
-              onChange={e => setContent(e.target.value)} 
+            <textarea
+              value={content}
+              onChange={e => setContent(e.target.value)}
               placeholder="Article content in Markdown format"
               rows={15}
             />
             <small>You can use Markdown formatting</small>
           </div>
-          
+
           <div className="form-actions">
             <button onClick={() => router.back()} className="cancel-btn">
               <FontAwesomeIcon icon={faTimes} /> Cancel
@@ -121,6 +120,6 @@ export default function EditArticle() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
