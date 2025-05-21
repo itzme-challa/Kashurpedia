@@ -14,42 +14,35 @@ export default function NavBar() {
         <button 
           className="mobile-menu-button"
           onClick={() => setMenuOpen(!menuOpen)}
-        />
-        <Link href="/">
-          <span className="nav-text">Kashurpedia</span>
-        </Link>
+          aria-label="Menu"
+        >
+          ☰
+        </button>
+        <Link href="/">Kashurpedia</Link>
       </div>
       
       <div className={`nav-links ${menuOpen ? "active" : ""}`}>
-        <Link href="/submit">
-          <span className="nav-text">Submit Article</span>
-        </Link>
+        <Link href="/submit">Submit Article</Link>
         
         {user ? (
           <>
-            <span style={{ padding: "1em" }}>Welcome, {user.displayName || user.email}</span>
+            <span>Welcome, {user.displayName || user.email}</span>
             <button 
               onClick={() => signOut(auth)}
               style={{ 
                 background: "none", 
                 border: "none", 
                 color: "var(--link-color)",
-                padding: "1em",
-                textAlign: "left"
+                cursor: "pointer"
               }}
             >
-              <i className="fas fa-sign-out-alt" style={{ marginRight: "0.5em" }}></i>
-              <span className="nav-text">Log out</span>
+              Log out
             </button>
           </>
         ) : (
           <>
-            <Link href="/auth/login">
-              <span className="nav-text">Log in</span>
-            </Link>
-            <Link href="/auth/signup">
-              <span className="nav-text">Create account</span>
-            </Link>
+            <Link href="/auth/login">Log in</Link>
+            <Link href="/auth/signup">Create account</Link>
           </>
         )}
       </div>
