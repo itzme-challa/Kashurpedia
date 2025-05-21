@@ -1,48 +1,67 @@
 import { useState } from "react";
 import { resetPassword } from "../../utils/auth";
-import Layout from "../../components/Layout";
+import NavBar from "../../components/NavBar";
 
 export default function ResetPassword() {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleReset = async () => {
+    setError("");
+    setSuccess("");
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Please enter a valid email.");
+      return;
+    }
+    setLoading(true);
     try {
       await resetPassword(email);
-      setMessage("Password reset email sent. Please check your inbox.");
-      setError("");
+      setSuccess("Password reset email sent. Check your inbox.");
     } catch (err) {
-      setError(err.message);
-      setMessage("");
+      setError("Failed to send reset email. Please try again.");
     }
+    setLoading(false);
   };
 
   return (
-    <Layout>
-      <div className="wiki-content">
-        <h1>Reset your password</h1>
-        {message && <div className="success-message" style={{color: 'green'}}>{message}</div>}
-        {error && <div className="error-message" style={{color: 'red'}}>{error}</div>}
-        <form onSubmit={handleSubmit} className="wiki-form">
+    <div className="container min-h-screen">
+      <NavBar />
+      <div className="max-w-md mx-auto mt-8">
+        <h1>Reset Password</h1>
+        {error && <p className="text-red-600 mb-4">{error}</p>}
+        {success && <p className="text-green-600 mb-4">{success}</p>}
+        <form className="space-y-4">
           <div>
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="email" className="block text-sm font-medium">
+              Email
+            </label>
             <input
               id="email"
               type="email"
-              placeholder="Enter your email"
+              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
+              className="mt-1"
+              aria-required="true"
             />
           </div>
-          <button type="submit">Send reset email</button>
+          <button
+            type="button"
+            onClick={handleReset}
+            disabled={loading}
+            className="w-full"
+          >
+            {loading ? "Sending..." : "Send Reset Email"}
+          </button>
+          <p className="text-sm">
+            <Link href="/auth/login" className="text-blue-600 hover:underline">
+              Back to login
+            </Link>
+          </p>
         </form>
-        <div style={{ marginTop: '20px' }}>
-          <p><a href="/auth/login">Return to login</a></p>
-        </div>
       </div>
-    </Layout>
+    </div>
   );
 }
