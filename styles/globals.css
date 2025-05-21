@@ -1,0 +1,11 @@
+body {
+  font-family: sans-serif;
+  margin: 20px;
+  background: #f9f9f9;
+}
+
+input, textarea {
+  padding: 8px;
+  margin: 5px;
+  width: 300px;
+}
