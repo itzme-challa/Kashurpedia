@@ -69,6 +69,7 @@ html, body {
   color: white;
   border: none;
   font-size: 1em;
+  cursor: pointer;
 }
 
 /* Links - Wikipedia Style */
@@ -95,6 +96,20 @@ a:hover {
 .nav-links {
   display: flex;
   gap: 1em;
+  align-items: center;
+}
+
+.nav-link {
+  padding: 0.5em;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  color: var(--link-color);
+  font-size: 1em;
+  cursor: pointer;
+  padding: 0.5em;
 }
 
 /* Search - Full Width */
@@ -107,6 +122,7 @@ a:hover {
   width: 100%;
   padding: 0.75em;
   border: 1px solid var(--border-color);
+  font-size: 1em;
 }
 
 /* Posts/Categories - Full Width */
@@ -125,11 +141,13 @@ a:hover {
 .post-list {
   width: 100%;
   column-count: 1;
+  padding: 0;
+  list-style: none;
 }
 
 .post-item {
   break-inside: avoid;
-  padding: 0.5em 0;
+  padding: 0.75em 0;
   border-bottom: 1px solid #eaecf0;
 }
 
@@ -140,14 +158,11 @@ a:hover {
   border: none;
   font-size: 1.5em;
   padding: 0.5em;
+  cursor: pointer;
 }
 
 /* Mobile Styles */
 @media (max-width: 768px) {
-  .nav-text {
-    display: none;
-  }
-  
   .mobile-menu-button {
     display: block;
   }
@@ -158,53 +173,26 @@ a:hover {
     top: 100%;
     left: 0;
     width: 100%;
-    background: white;
+    background: var(--content-background);
     flex-direction: column;
     border-bottom: 1px solid var(--border-color);
+    padding: 0.5em 0;
   }
   
   .nav-links.active {
     display: flex;
   }
   
-  .nav-links a {
+  .nav-link, .nav-button {
     padding: 1em;
     border-top: 1px solid #eaecf0;
+    width: 100%;
+    text-align: left;
   }
   
-  /* Font Awesome Icons */
-  .mobile-menu-button::before {
-    content: "\f0c9";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-  }
-  
-  .nav-links a[href="/"]::before {
-    content: "\f015";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 0.5em;
-  }
-  
-  .nav-links a[href="/submit"]::before {
-    content: "\f067";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 0.5em;
-  }
-  
-  .nav-links a[href="/auth/login"]::before {
-    content: "\f2f6";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 0.5em;
-  }
-  
-  .nav-links a[href="/auth/signup"]::before {
-    content: "\f234";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 0.5em;
+  .nav-button {
+    color: var(--link-color);
+    font-family: inherit;
   }
 }
 
@@ -215,36 +203,44 @@ a:hover {
     column-gap: 2em;
   }
   
-  .nav-text {
-    display: inline;
+  .mobile-menu-button {
+    display: none;
   }
   
-  /* Font Awesome Icons with Text */
-  .nav-links a[href="/"]::before {
-    content: "\f015";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 0.3em;
+  .nav-links {
+    display: flex;
+    position: static;
+    width: auto;
+    background: transparent;
+    flex-direction: row;
+    border-bottom: none;
+    padding: 0;
   }
   
-  .nav-links a[href="/submit"]::before {
-    content: "\f067";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 0.3em;
+  .nav-link, .nav-button {
+    padding: 0.5em;
+    border-top: none;
+    width: auto;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .navbar, .mobile-menu-button {
+    display: none;
   }
   
-  .nav-links a[href="/auth/login"]::before {
-    content: "\f2f6";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 0.3em;
+  .wiki-content {
+    background: white;
+    padding: 0;
   }
   
-  .nav-links a[href="/auth/signup"]::before {
-    content: "\f234";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 0.3em;
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+  
+  .post-list {
+    column-count: 1;
   }
 }
