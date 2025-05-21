@@ -1,12 +1,13 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { db, auth } from "../../utils/firebase";
-import { ref, get, child, remove } from "firebase/database";
+import { ref, get, remove } from "firebase/database";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Link from "next/link";
 import NavBar from "../../components/NavBar";
 import Head from "next/head";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import ReactMarkdown from 'react-markdown';
 
 export default function ArticlePage() {
@@ -38,16 +39,15 @@ export default function ArticlePage() {
     }
   };
 
-  if (!article) return <div className="loading">Loading...</div>;
+  if (!article) return <p>Loading...</p>;
 
   return (
-    <div className="article-view-container">
+    <>
       <Head>
         <title>{article.title} - Kashurpedia</title>
         <meta name="description" content={article.summary || article.content.slice(0, 150)} />
       </Head>
       <NavBar />
-      
       <div className="wiki-content">
         <div className="article-header">
           <h1>{article.title}</h1>
@@ -57,24 +57,24 @@ export default function ArticlePage() {
             <span>Last edited: {new Date(article.timestamp).toLocaleDateString()}</span>
           </div>
         </div>
-        
+
         {article.imageUrl && (
           <div className="article-image">
             <img src={article.imageUrl} alt={article.title} />
             {article.imageCaption && <div className="image-caption">{article.imageCaption}</div>}
           </div>
         )}
-        
+
         {article.summary && (
           <div className="article-summary">
             <ReactMarkdown>{article.summary}</ReactMarkdown>
           </div>
         )}
-        
+
         <div className="article-content">
           <ReactMarkdown>{article.content}</ReactMarkdown>
         </div>
-        
+
         {user?.uid === article.userId && (
           <div className="article-actions">
             <Link href={`/article/edit/${id}`} className="edit-btn">
@@ -86,6 +86,6 @@ export default function ArticlePage() {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }
