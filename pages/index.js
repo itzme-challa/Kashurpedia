@@ -50,40 +50,40 @@ export default function Home() {
 
         <SearchBar query={query} setQuery={setQuery} />
 
-        {Object.keys(filteredArticles).length > 0 ? (
-          <div className="category-list">
-            {Object.keys(filteredArticles).map((category) => {
-              const articlesArr = Object.entries(filteredArticles[category]);
-              const previewArticles = articlesArr.slice(0, 3);
+        {Object.keys(filteredArticles).map((category, index, arr) => {
+  const articlesArr = Object.entries(filteredArticles[category]);
+  const previewArticles = articlesArr.slice(0, 3);
 
-              return (
-                <div key={category} style={{ breakInside: "avoid", marginBottom: "40px" }}>
-                  <h2>{category}</h2>
-                  <ul className="article-list" style={{ listStyle: "none", paddingLeft: 0 }}>
-                    {previewArticles.map(([id, article]) => (
-                      <li key={id} style={{ marginBottom: "20px" }}>
-                        <h3>
-                          <Link href={`/article/${id}`}>
-                            <a>{article.title}</a>
-                          </Link>
-                        </h3>
-                        <p>
-                          {getSnippet(article.content)}{" "}
-                          <Link href={`/article/${id}`}>
-                            <a style={{ fontWeight: "bold" }}>Read more...</a>
-                          </Link>
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                  {articlesArr.length > 3 && (
-                    <Link href={`/category/${encodeURIComponent(category)}`}>
-                      <a style={{ fontWeight: "bold" }}>View more...</a>
-                    </Link>
-                  )}
-                </div>
-              );
-            })}
+  return (
+    <div key={category} style={{ breakInside: "avoid", marginBottom: "40px" }}>
+      <h2>{category}</h2>
+      <ul className="article-list" style={{ listStyle: "none", paddingLeft: 0 }}>
+        {previewArticles.map(([id, article]) => (
+          <li key={id} style={{ marginBottom: "20px" }}>
+            <h3>
+              <Link href={`/article/${id}`}>
+                <a>{article.title}</a>
+              </Link>
+            </h3>
+            <p>
+              {getSnippet(article.content)}{" "}
+              <Link href={`/article/${id}`}>
+                <a style={{ fontWeight: "bold" }}>Read more...</a>
+              </Link>
+            </p>
+          </li>
+        ))}
+      </ul>
+      {articlesArr.length > 3 && (
+        <Link href={`/category/${encodeURIComponent(category)}`}>
+          <a style={{ fontWeight: "bold" }}>View more...</a>
+        </Link>
+      )}
+      {/* Add line break except after last category */}
+      {index < arr.length - 1 && <hr style={{ margin: "40px 0" }} />}
+    </div>
+  );
+})}
           </div>
         ) : (
           <p>No articles found. {query && "Try a different search term."}</p>
