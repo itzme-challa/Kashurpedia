@@ -66,12 +66,26 @@ export default function Submit() {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option value="General">General</option>
-              <option value="History">History</option>
-              <option value="Culture">Culture</option>
-              <option value="Language">Language</option>
-              <option value="People">People</option>
-              <option value="Geography">Geography</option>
+              <option value="Anantnag">Anantnag</option>
+<option value="Bandipora">Bandipora</option>
+<option value="Baramulla">Baramulla</option>
+<option value="Budgam">Budgam</option>
+<option value="Doda">Doda</option>
+<option value="Ganderbal">Ganderbal</option>
+<option value="Jammu">Jammu</option>
+<option value="Kathua">Kathua</option>
+<option value="Kishtwar">Kishtwar</option>
+<option value="Kulgam">Kulgam</option>
+<option value="Kupwara">Kupwara</option>
+<option value="Poonch">Poonch</option>
+<option value="Pulwama">Pulwama</option>
+<option value="Rajouri">Rajouri</option>
+<option value="Ramban">Ramban</option>
+<option value="Reasi">Reasi</option>
+<option value="Samba">Samba</option>
+<option value="Shopian">Shopian</option>
+<option value="Srinagar">Srinagar</option>
+<option value="Udhampur">Udhampur</option>
             </select>
           </div>
           <div>
