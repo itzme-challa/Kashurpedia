@@ -4,6 +4,9 @@ import { db } from "../utils/firebase";
 import { ref, onValue } from "firebase/database";
 import Layout from "../components/Layout";
 import SearchBar from "../components/SearchBar";
+import ReactMarkdown from "react-markdown";
+
+const SNIPPET_LENGTH = 150; // number of chars to show in snippet
 
 export default function Home() {
   const [articles, setArticles] = useState({});
@@ -17,9 +20,9 @@ export default function Home() {
     });
   }, []);
 
-  // Filter articles by query
+  // Filter articles by query in title only
   const filteredArticles = Object.keys(articles).reduce((acc, category) => {
-    const filtered = Object.entries(articles[category] || {}).filter(([id, article]) =>
+    const filtered = Object.entries(articles[category]).filter(([id, article]) =>
       article.title.toLowerCase().includes(query.toLowerCase())
     );
     if (filtered.length > 0) {
@@ -28,13 +31,16 @@ export default function Home() {
     return acc;
   }, {});
 
-  // Helper to get excerpt (first 30-40 words)
-  const getExcerpt = (text, wordLimit = 35) => {
-    if (!text) return "";
-    const words = text.split(/\s+/);
-    if (words.length <= wordLimit) return text;
-    return words.slice(0, wordLimit).join(" ") + "...";
-  };
+  // Helper to get snippet from Markdown content (remove markdown, get first N chars)
+  function getSnippet(markdown) {
+    if (!markdown) return "";
+    // A quick way: strip markdown syntax (roughly)
+    const plainText = markdown
+      .replace(/[#_*>\-`]/g, "")
+      .replace(/\n/g, " ")
+      .slice(0, SNIPPET_LENGTH);
+    return plainText + (plainText.length >= SNIPPET_LENGTH ? "..." : "");
+  }
 
   return (
     <Layout>
@@ -47,28 +53,30 @@ export default function Home() {
         {Object.keys(filteredArticles).length > 0 ? (
           <div className="category-list">
             {Object.keys(filteredArticles).map((category) => {
-              const articlesInCategory = Object.entries(filteredArticles[category]);
-              const showArticles = articlesInCategory.slice(0, 3);
+              const articlesArr = Object.entries(filteredArticles[category]);
+              const previewArticles = articlesArr.slice(0, 3);
 
               return (
-                <div key={category} style={{ breakInside: "avoid", marginBottom: "20px" }}>
+                <div key={category} style={{ breakInside: "avoid", marginBottom: "40px" }}>
                   <h2>{category}</h2>
-                  <ul className="article-list">
-                    {showArticles.map(([id, article]) => (
-                      <li key={id} style={{ marginBottom: "10px" }}>
-                        <Link href={`/article/${id}`}>
-                          <a style={{ fontWeight: "bold" }}>{article.title}</a>
-                        </Link>
-                        <p>
-                          {getExcerpt(article.content)}{" "}
+                  <ul className="article-list" style={{ listStyle: "none", paddingLeft: 0 }}>
+                    {previewArticles.map(([id, article]) => (
+                      <li key={id} style={{ marginBottom: "20px" }}>
+                        <h3>
                           <Link href={`/article/${id}`}>
-                            <a>Read more...</a>
+                            <a>{article.title}</a>
+                          </Link>
+                        </h3>
+                        <p>
+                          {getSnippet(article.content)}{" "}
+                          <Link href={`/article/${id}`}>
+                            <a style={{ fontWeight: "bold" }}>Read more...</a>
                           </Link>
                         </p>
                       </li>
                     ))}
                   </ul>
-                  {articlesInCategory.length > 3 && (
+                  {articlesArr.length > 3 && (
                     <Link href={`/category/${encodeURIComponent(category)}`}>
                       <a style={{ fontWeight: "bold" }}>View more...</a>
                     </Link>
