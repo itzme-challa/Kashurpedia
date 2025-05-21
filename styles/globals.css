@@ -1,4 +1,4 @@
-/* === Minimal Wikipedia-style Layout === */
+/* === Global Styles === */
 body {
   font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
   line-height: 1.6;
@@ -10,22 +10,29 @@ body {
 
 /* Links */
 a {
-  color: #202122; /* Black color */
-  text-decoration: none; /* No underline */
+  color: #202122;
+  text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
 }
 
+/* Layout */
+.full-width-container {
+  width: 100%;
+  padding: 0;
+}
+
 /* Navigation */
 .navbar {
   width: 100%;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid #a7d7f9;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #f8f9fa;
 }
 
 .nav-brand {
@@ -35,31 +42,33 @@ a:hover {
 
 .nav-links {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
   align-items: center;
 }
 
 .nav-link {
   position: relative;
-}
-
-.nav-link-text {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .nav-button {
   background: transparent;
   border: 1px solid #36c;
   color: #36c;
-  padding: 0.25rem 0.5rem;
+  padding: 0.4rem 0.75rem;
   border-radius: 3px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-/* Auth Forms */
-.auth-container {
+/* Auth Pages */
+.auth-page {
   width: 100%;
-  padding: 1rem;
+  padding: 2rem 1rem;
 }
 
 .auth-form {
@@ -68,11 +77,21 @@ a:hover {
   margin: 0 auto;
 }
 
+.auth-form-group {
+  margin-bottom: 1.25rem;
+}
+
+.auth-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
 .auth-form input {
   width: 100%;
   padding: 0.75rem;
-  margin-bottom: 1rem;
   border: 1px solid #a2a9b1;
+  border-radius: 3px;
 }
 
 .auth-form button {
@@ -81,9 +100,17 @@ a:hover {
   background: #36c;
   color: white;
   border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-/* Posts/Categories */
+.auth-form-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+/* Posts */
 .category-container {
   width: 100%;
   padding: 1rem;
@@ -92,8 +119,8 @@ a:hover {
 .category-title {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  border-bottom: 1px solid #a2a9b1;
   padding-bottom: 0.25rem;
+  border-bottom: 1px solid #a2a9b1;
 }
 
 .post-list {
@@ -104,8 +131,8 @@ a:hover {
 
 .post-item {
   break-inside: avoid;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem 0;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
   border-bottom: 1px solid #eaecf0;
 }
 
@@ -119,6 +146,7 @@ a:hover {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #a2a9b1;
+  border-radius: 3px;
 }
 
 /* Mobile Styles */
@@ -127,35 +155,11 @@ a:hover {
     display: none;
   }
   
-  .nav-link::after {
-    font-family: 'Font Awesome';
-    content: attr(data-icon);
+  .nav-icon {
     font-size: 1.25rem;
   }
   
-  .nav-link[href="/"]::after {
-    content: "\f015"; /* home icon */
-  }
-  
-  .nav-link[href="/submit"]::after {
-    content: "\f067"; /* plus icon */
-  }
-  
-  .nav-link[href="/auth/login"]::after {
-    content: "\f2f6"; /* sign-in icon */
-  }
-  
-  .nav-link[href="/auth/signup"]::after {
-    content: "\f234"; /* user-plus icon */
-  }
-  
-  .nav-button::after {
-    content: "\f2f5"; /* sign-out icon */
-    font-family: 'Font Awesome';
-    font-size: 1.25rem;
-  }
-  
-  .nav-button span {
+  .nav-button-text {
     display: none;
   }
   
@@ -163,7 +167,7 @@ a:hover {
     display: none;
   }
   
-  /* Tooltip for mobile */
+  /* Tooltips */
   .nav-link:hover::before,
   .nav-button:hover::before {
     content: attr(data-tooltip);
@@ -187,23 +191,21 @@ a:hover {
     column-count: 3;
   }
   
-  .nav-link::after {
-    display: none;
-  }
-  
   .nav-link-text {
     display: inline-block;
   }
   
-  .nav-button::after {
-    display: none;
-  }
-  
-  .nav-button span {
+  .nav-button-text {
     display: inline-block;
   }
   
   .welcome-message {
     display: inline-block;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+  }
+  
+  .auth-page {
+    padding: 3rem 1rem;
   }
 }
