@@ -1,33 +1,49 @@
 import Link from "next/link";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../utils/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 
 export default function NavBar() {
   const [user] = useAuthState(auth);
 
   return (
-    <nav className="bg-white border-b border-gray-300 py-2">
-      <div className="container flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold text-gray-800">
-          Kashurpedia
-        </Link>
-        <div className="flex items-center space-x-4">
-          <Link href="/" className="text-blue-600 hover:underline">Home</Link>
+    <nav style={{
+      background: '#f8f9fa',
+      padding: '10px 0',
+      borderBottom: '1px solid #a7d7f9',
+      marginBottom: '20px'
+    }}>
+      <div className="container" style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <Link href="/" style={{ fontWeight: 'bold', fontSize: '20px' }}>
+            Kashurpedia
+          </Link>
+          <Link href="/submit">Submit Article</Link>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           {user ? (
             <>
-              <Link href="/submit" className="text-blue-600 hover:underline">Submit Article</Link>
-              <button
+              <span>Welcome, {user.displayName || user.email}</span>
+              <button 
                 onClick={() => signOut(auth)}
-                className="text-blue-600 hover:underline"
+                style={{
+                  background: 'transparent',
+                  color: '#36c',
+                  border: '1px solid #36c',
+                  padding: '5px 10px'
+                }}
               >
-                Logout
+                Log out
               </button>
             </>
           ) : (
             <>
-              <Link href="/auth/login" className="text-blue-600 hover:underline">Login</Link>
-              <Link href="/auth/signup" className="text-blue-600 hover:underline">Signup</Link>
+              <Link href="/auth/login">Log in</Link>
+              <Link href="/auth/signup">Create account</Link>
             </>
           )}
         </div>

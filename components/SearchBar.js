@@ -1,13 +1,19 @@
 export default function SearchBar({ query, setQuery }) {
   return (
-    <div className="container my-4">
+    <div style={{ margin: '20px 0' }}>
       <input
-        type="text"
+        type="search"
         placeholder="Search Kashurpedia..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full max-w-lg border border-gray-300 p-2 rounded"
-        aria-label="Search articles"
+        style={{
+          width: '100%',
+          maxWidth: '500px',
+          padding: '10px',
+          fontSize: '16px',
+          border: '1px solid #a2a9b1',
+          borderRadius: '2px'
+        }}
       />
     </div>
   );
