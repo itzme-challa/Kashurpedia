@@ -1,93 +1,79 @@
-:root {
-  --background-color: #f6f6f6;
-  --header-color: #f8f9fa;
-  --border-color: #a7d7f9;
-  --link-color: #0645ad;
-  --link-hover-color: #0b0080;
-  --button-color: #36c;
-  --button-hover-color: #447ff5;
-}
-
+/* Use a Wikipedia-like font stack */
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  line-height: 1.6;
+  font-family: 'Linux Libertine', 'Georgia', 'Times New Roman', Times, serif;
+  background-color: #f8f9fa;
   color: #202122;
-  background-color: var(--background-color);
-  margin: 0;
-  padding: 0;
+  line-height: 1.6;
 }
 
+/* Links */
+a {
+  color: #0645ad;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Container for centered content */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 1rem;
 }
 
-a {
-  color: var(--link-color);
-  text-decoration: none;
+/* Headings */
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  border-bottom: 1px solid #a2a9b1;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-a:hover {
-  text-decoration: underline;
-  color: var(--link-hover-color);
+h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-top: 1.5rem;
 }
 
-input, textarea, select {
+/* Inputs and Buttons */
+input, textarea {
   border: 1px solid #a2a9b1;
-  padding: 8px;
+  padding: 0.5rem;
   border-radius: 2px;
-  font-size: 16px;
-  margin-bottom: 10px;
+  width: 100%;
+  max-width: 400px;
+  font-size: 1rem;
 }
 
 button {
-  background-color: var(--button-color);
+  background-color: #36c;
   color: white;
+  padding: 0.5rem 1rem;
   border: none;
-  padding: 8px 16px;
   border-radius: 2px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
 }
-
 button:hover {
-  background-color: var(--button-hover-color);
+  background-color: #447ff5;
 }
 
-.wiki-content {
-  background-color: white;
-  border: 1px solid #a7d7f9;
-  padding: 20px;
-  margin-top: 20px;
+button:disabled {
+  background-color: #a2a9b1;
+  cursor: not-allowed;
 }
 
-.wiki-form {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.wiki-form input,
-.wiki-form textarea,
-.wiki-form select {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.wiki-form textarea {
-  min-height: 300px;
-}
-
-.category-list {
-  column-count: 3;
-  column-gap: 20px;
-}
-
-.article-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.article-list li {
-  margin-bottom: 8px;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+  input, textarea {
+    max-width: 100%;
+  }
 }
