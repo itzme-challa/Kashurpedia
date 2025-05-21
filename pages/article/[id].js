@@ -43,4 +43,17 @@ export default function ArticlePage() {
       <NavBar />
       <Head>
         <title>{article.title} - Kashurpedia</title>
-       0
+       <meta name="description" content={article.content.slice(0, 150)} />
+      </Head>
+      <h1>{article.title}</h1>
+      <p><i>By {article.username}</i></p>
+      <div dangerouslySetInnerHTML={{ __html: article.content }} />
+      {user?.uid === article.userId && (
+        <div>
+          <Link href={`/article/edit/${id}`}>Edit</Link>
+          <button onClick={handleDelete}>Delete</button>
+        </div>
+      )}
+    </div>
+  );
+}
