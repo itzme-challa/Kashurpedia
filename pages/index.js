@@ -1,30 +1,44 @@
-import Link from "next/link";
-import { db, get, child, ref } from "../utils/firebase";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { db } from "../utils/firebase";
+import { ref, onValue } from "firebase/database";
+import NavBar from "../components/NavBar";
+import SearchBar from "../components/SearchBar";
 
 export default function Home() {
   const [articles, setArticles] = useState({});
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
-    get(child(ref(db), "articles")).then(snapshot => {
-      if (snapshot.exists()) {
-        setArticles(snapshot.val());
-      }
+    const articlesRef = ref(db, "articles");
+    onValue(articlesRef, (snapshot) => {
+      const data = snapshot.val();
+      setArticles(data || {});
     });
   }, []);
 
+  const filteredArticles = Object.keys(articles).reduce((acc, category) => {
+    const filtered = Object.entries(articles[category]).filter(([id, article]) =>
+      article.title.toLowerCase().includes(query.toLowerCase())
+    );
+    if (filtered.length > 0) {
+      acc[category] = Object.fromEntries(filtered);
+    }
+    return acc;
+  }, {});
+
   return (
     <div>
+      <NavBar />
       <h1>Kashurpedia</h1>
-      <Link href="/submit">Submit New Article</Link>
-      <hr />
-      {Object.keys(articles).map(category => (
+      <SearchBar query={query} setQuery={setQuery} />
+      {Object.keys(filteredArticles).map((category) => (
         <div key={category}>
           <h2>{category}</h2>
           <ul>
-            {Object.entries(articles[category]).map(([id, data]) => (
+            {Object.entries(filteredArticles[category]).map(([id, article]) => (
               <li key={id}>
-                <Link href={`/article/${id}`}>{data.title}</Link>
+                <Link href={`/article/${id}`}>{article.title}</Link>
               </li>
             ))}
           </ul>
