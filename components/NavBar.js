@@ -10,39 +10,35 @@ export default function NavBar() {
 
   return (
     <nav className="navbar">
-      <div style={{ display: "flex", alignItems: "center", gap: "1em" }}>
+      <div className="nav-brand">
         <button 
           className="mobile-menu-button"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menu"
+          aria-expanded={menuOpen}
         >
           ☰
         </button>
-        <Link href="/">Kashurpedia</Link>
+        <Link href="/" className="nav-logo">Kashurpedia</Link>
       </div>
       
       <div className={`nav-links ${menuOpen ? "active" : ""}`}>
-        <Link href="/submit">Submit Article</Link>
+        <Link href="/submit" className="nav-link">Submit Article</Link>
         
         {user ? (
           <>
-            <span>Welcome, {user.displayName || user.email}</span>
+            <span className="welcome-message">Welcome, {user.displayName || user.email}</span>
             <button 
               onClick={() => signOut(auth)}
-              style={{ 
-                background: "none", 
-                border: "none", 
-                color: "var(--link-color)",
-                cursor: "pointer"
-              }}
+              className="nav-button"
             >
               Log out
             </button>
           </>
         ) : (
           <>
-            <Link href="/auth/login">Log in</Link>
-            <Link href="/auth/signup">Create account</Link>
+            <Link href="/auth/login" className="nav-link">Log in</Link>
+            <Link href="/auth/signup" className="nav-link">Create account</Link>
           </>
         )}
       </div>
