@@ -5,6 +5,17 @@ import { ref, onValue } from "firebase/database";
 import Layout from "../../components/Layout";
 import Link from "next/link";
 
+const SNIPPET_LENGTH = 150;
+
+function getSnippet(markdown) {
+  if (!markdown) return "";
+  const plainText = markdown
+    .replace(/[#_*>\-`]/g, "")
+    .replace(/\n/g, " ")
+    .slice(0, SNIPPET_LENGTH);
+  return plainText + (plainText.length >= SNIPPET_LENGTH ? "..." : "");
+}
+
 export default function CategoryPage() {
   const router = useRouter();
   const { category } = router.query;
@@ -38,7 +49,9 @@ export default function CategoryPage() {
                   </Link>
                 </h3>
                 <p style={{ color: "#666" }}>
-                  {article.description ? article.description : "No description available."}
+                  {article.description && article.description.trim()
+                    ? article.description
+                    : getSnippet(article.content)}
                 </p>
               </li>
             ))}
