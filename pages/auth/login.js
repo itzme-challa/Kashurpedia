@@ -1,59 +1,96 @@
 import { useState } from "react";
 import { login } from "../../utils/auth";
 import { useRouter } from "next/router";
-import Layout from "../../components/Layout";
+import NavBar from "../../components/NavBar";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const validateForm = () => {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Please enter a valid email.");
+      return false;
+    }
+    if (!password || password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return false;
+    }
+    return true;
+  };
+
+  const handleLogin = async () => {
+    setError("");
+    if (!validateForm()) return;
+    setLoading(true);
     try {
       await login(email, password);
       router.push("/");
     } catch (err) {
-      setError(err.message);
+      setError("Invalid email or password.");
+      setLoading(false);
     }
   };
 
   return (
-    <Layout>
-      <div className="wiki-content">
+    <div className="container min-h-screen">
+      <NavBar />
+      <div className="max-w-md mx-auto mt-8">
         <h1>Log in to Kashurpedia</h1>
-        {error && <div className="error-message" style={{color: 'red'}}>{error}</div>}
-        <form onSubmit={handleLogin} className="wiki-form">
+        {error && <p className="text-red-600 mb-4">{error}</p>}
+        <form className="space-y-4">
           <div>
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="email" className="block text-sm font-medium">
+              Email
+            </label>
             <input
               id="email"
               type="email"
-              placeholder="Enter your email"
+              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
+              className="mt-1"
+              aria-required="true"
             />
           </div>
           <div>
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password" className="block text-sm font-medium">
+              Password
+            </label>
             <input
               id="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
+              className="mt-1"
+              aria-required="true"
             />
           </div>
-          <button type="submit">Log in</button>
+          <button
+            type="button"
+            onClick={handleLogin}
+            disabled={loading}
+            className="w-full"
+          >
+            {loading ? "Logging in..." : "Log in"}
+          </button>
+          <p className="text-sm">
+            <Link href="/auth/reset" className="text-blue-600 hover:underline">
+              Forgot password?
+            </Link>
+          </p>
+          <p className="text-sm">
+            Don't have an account?{" "}
+            <Link href="/auth/signup" className="text-blue-600 hover:underline">
+              Sign up
+            </Link>
+          </p>
         </form>
-        <div style={{ marginTop: '20px' }}>
-          <p>Don't have an account? <a href="/auth/signup">Create one</a></p>
-          <p><a href="/auth/reset">Forgot your password?</a></p>
-        </div>
       </div>
-    </Layout>
+    </div>
   );
 }
