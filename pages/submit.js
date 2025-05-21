@@ -3,7 +3,12 @@ import { useRouter } from "next/router";
 import { db, auth } from "../utils/firebase";
 import { ref, set } from "firebase/database";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Layout from "../components/Layout";
+import NavBar from "../components/NavBar";
+import dynamic from "next/dynamic";
+
+// Dynamically import ReactQuill to avoid SSR issues
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css";
 
 export default function Submit() {
   const [user] = useAuthState(auth);
@@ -11,10 +16,29 @@ export default function Submit() {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("General");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const validateForm = () => {
+    if (!title || title.length < 3) {
+      setError("Title must be at least 3 characters.");
+      return false;
+    }
+    if (!content || content === "<p><br></p>") {
+      setError("Content cannot be empty.");
+      return false;
+    }
+    if (!category) {
+      setError("Category is required.");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    setError("");
+    if (!validateForm()) return;
+    setLoading(true);
     try {
       const id = Date.now().toString();
       await set(ref(db, `articles/${category}/${id}`), {
@@ -24,69 +48,87 @@ export default function Submit() {
         userId: user.uid,
         username: user.displayName,
         timestamp: Date.now(),
-        versions: []
+        versions: [],
       });
       router.push("/");
     } catch (err) {
-      setError(err.message);
+      setError("Failed to submit article. Please try again.");
+      setLoading(false);
     }
   };
 
   if (!user) {
     return (
-      <Layout>
-        <div className="wiki-content">
-          <p>Please <a href="/auth/login">log in</a> to submit an article.</p>
-        </div>
-      </Layout>
+      <div className="container min-h-screen">
+        <NavBar />
+        <p className="text-gray-600 mt-8">
+          Please{" "}
+          <Link href="/auth/login" className="text-blue-600 hover:underline">
+            log in
+          </Link>{" "}
+          to submit an article.
+        </p>
+      </div>
     );
   }
 
   return (
-    <Layout>
-      <div className="wiki-content">
-        <h1>Submit a new article</h1>
-        {error && <div className="error-message" style={{color: 'red'}}>{error}</div>}
-        <form onSubmit={handleSubmit} className="wiki-form">
+    <div className="container min-h-screen">
+      <NavBar />
+      <div className="max-w-3xl mx-auto mt-8">
+        <h1>Submit a New Article</h1>
+        {error && <p className="text-red-600 mb-4">{error}</p>}
+        <form className="space-y-4">
           <div>
-            <label htmlFor="title">Article Title:</label>
+            <label htmlFor="title" className="block text-sm font-medium">
+              Title
+            </label>
             <input
               id="title"
               type="text"
-              placeholder="Enter article title"
+              placeholder="Article Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              required
+              className="mt-1"
+              aria-required="true"
             />
           </div>
           <div>
-            <label htmlFor="category">Category:</label>
-            <select
+            <label htmlFor="content" className="block text-sm font-medium">
+              Content
+            </label>
+            <ReactQuill
+              id="content"
+              value={content}
+              onChange={setContent}
+              className="mt-1 bg-white"
+              theme="snow"
+            />
+          </div>
+          <div>
+            <label htmlFor="category" className="block text-sm font-medium">
+              Category
+            </label>
+            <input
               id="category"
+              type="text"
+              placeholder="Category (e.g., History, Culture)"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="General">General</option>
-              <option value="History">History</option>
-              <option value="Culture">Culture</option>
-              <option value="Language">Language</option>
-              <option value="People">People</option>
-              <option value="Geography">Geography</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor="content">Article Content:</label>
-            <textarea
-              id="content"
-              placeholder="Enter the article content (Markdown supported)"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              required
+              className="mt-1"
+              aria-required="true"
             />
           </div>
-          <button type="submit">Submit Article</button>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={loading}
+            className="w-full"
+          >
+            {loading ? "Submitting..." : "Submit Article"}
+          </button>
         </form>
       </div>
-    </Layout>
+    </div>
   );
 }
